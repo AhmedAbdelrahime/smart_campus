@@ -1,4 +1,3 @@
-
 name: Build Flutter APK with Versioning
 
 on:
@@ -15,10 +14,19 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v3
 
+      - name: Set up Java (required for Android)
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.19.0'
+
+      - name: Accept Android Licenses
+        run: yes | flutter doctor --android-licenses
 
       - name: Install dependencies
         run: flutter pub get
@@ -37,5 +45,5 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: release-apk-${{ env.BUILD_NUMBER }}
+          name: app-release-${{ env.VERSION_NAME }}+${{ env.BUILD_NUMBER }}
           path: build/app/outputs/flutter-apk/app-release.apk
