@@ -43,7 +43,7 @@ jobs:
         run: flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v2  # fixed version
+        uses: actions/upload-artifact@v2.3.1
         with:
           name: app-release-${{ env.VERSION_NAME }}+${{ env.BUILD_NUMBER }}
           path: build/app/outputs/flutter-apk/app-release.apk
